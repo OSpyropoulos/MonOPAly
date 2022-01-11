@@ -1,0 +1,8 @@
+﻿  game.cpp
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating code
+  1 of 172 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ergasiacpp.vcxproj -> D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\ergasiacpp.exe

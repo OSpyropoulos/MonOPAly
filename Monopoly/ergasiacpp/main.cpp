@@ -20,7 +20,7 @@ void draw()
 int main()
 {
     Game maingame;
-    createWindow(CANVAS_WIDTH, CANVAS_HEIGHT,"Monopaly");
+    createWindow(WINDOW_WIDTH, WINDOW_HEIGHT,"MonOPAly");
 
     setUserData(&maingame);
 
@@ -30,9 +30,9 @@ int main()
     setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
     setCanvasScaleMode(CANVAS_SCALE_FIT);
 
+    maingame.init();
     startMessageLoop();
 
-    maingame.init();
     return 0;
 
 }
