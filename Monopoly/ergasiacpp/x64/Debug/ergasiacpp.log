@@ -1,6 +1,15 @@
-﻿main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Game::update(void)" (?update@Game@@QEAAXXZ) referenced in function "void __cdecl update(float)" (?update@@YAXM@Z)
-main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Game::draw(void)" (?draw@Game@@QEAAXXZ) referenced in function "void __cdecl draw(void)" (?draw@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Game::init(void)" (?init@Game@@QEAAXXZ) referenced in function main
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl Game::Game(void)" (??0Game@@QEAA@XZ) referenced in function main
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl Game::~Game(void)" (??1Game@@QEAA@XZ) referenced in function main
-D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\ergasiacppd.exe : fatal error LNK1120: 5 unresolved externals
+﻿  card.cpp
+  game.cpp
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  main.cpp
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\Game.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  player.cpp
+  Generating Code...
+sggd.lib(AudioManager.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(AudioManager.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(fonts.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(fonts.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(GLbackend.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(GLbackend.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(graphics.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(graphics.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(lodepng.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(lodepng.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(shader.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(shader.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+sggd.lib(texture.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(texture.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+  ergasiacpp.vcxproj -> D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\ergasiacppd.exe
