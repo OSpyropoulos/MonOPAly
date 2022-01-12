@@ -1,8 +1,11 @@
 #include "graphics.h"
 #include "Game.h"
 #include "Config.h"
+#include "Questionmark.h"
+#include <iostream>
 
 using namespace graphics;
+using namespace std;
 
 void update(float ms)
 {

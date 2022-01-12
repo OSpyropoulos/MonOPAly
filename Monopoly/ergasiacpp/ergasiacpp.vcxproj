@@ -148,17 +148,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assets.cpp" />
     <ClCompile Include="card.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="questionmark.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gameobject.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Questionmark.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
