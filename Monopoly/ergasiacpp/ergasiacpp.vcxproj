@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="assets.cpp" />
+    <ClCompile Include="asset.cpp" />
     <ClCompile Include="card.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -156,7 +156,7 @@
     <ClCompile Include="questionmark.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Assets.h" />
+    <ClInclude Include="Asset.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Game.h" />

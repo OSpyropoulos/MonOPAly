@@ -1,15 +1,9 @@
 #include "Questionmark.h"
 
-void Questionmark::draw() {
-
-}
-
-//returns the description of the card
-std::string Questionmark::getDescription(){
-	return description;
-}
-
 //returns the fee applied to the player
-int Questionmark ::getFee() {
+int Questionmark::getFee() {
 	return fee;
 }
+
+// Only Constructor for Questionmark
+Questionmark::Questionmark(const int& pos_x, const int& pos_y, const std::string & description, const int& fee) :Card(pos_x, pos_y, description), fee(fee) {}

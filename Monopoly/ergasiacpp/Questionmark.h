@@ -2,11 +2,11 @@
 #include "Card.h"
 
 class Questionmark : public Card {
-private:
+protected:
+	// fee = the amount of money that the card asks or gives
 	int fee;
 
 public:
-	void draw();
 	int getFee();
-	std::string getDescription();
+	Questionmark(const int&, const int&, const std::string&, const int& fee);
 };

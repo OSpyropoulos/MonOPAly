@@ -1,6 +1,5 @@
 #pragma once
 #include "Gameobject.h"
-#include "Config.h"
 #include <string>
 
 class Player : public GameObject{

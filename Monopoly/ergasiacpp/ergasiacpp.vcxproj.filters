@@ -27,7 +27,7 @@
     <ClCompile Include="card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="assets.cpp">
+    <ClCompile Include="asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="questionmark.cpp">
@@ -50,7 +50,7 @@
     <ClInclude Include="Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Assets.h">
+    <ClInclude Include="Asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Questionmark.h">

@@ -1,10 +1,28 @@
 #pragma once
 #include "graphics.h"
-#include "Player.h";
+#include "Config.h"
+#include "Player.h"
+#include "Asset.h"
+#include "Questionmark.h"
 
 class Game {
+	// the Game has:
+	// 
+	// 2 players
 	Player *player1 = nullptr;
-	Player* player2 = nullptr;
+	Player *player2 = nullptr;
+
+	//27 cards in total
+	Asset kafe1 = Asset(261, 472, "Kafe", 69, 0);
+
+	// 20 asset Cards
+	//Asset assets[20];
+
+	// 4 questionmark Cards
+	//Questionmark questionmarks[4];
+
+	// 4 extra Cards (Start, Go to Jail, Free Parking, Jail)
+	//Card extras[4];
 	 
 public:
 	void update();

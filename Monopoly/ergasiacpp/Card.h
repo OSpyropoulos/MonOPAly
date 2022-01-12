@@ -4,15 +4,15 @@
 
 class Card : public GameObject{
 protected:
+	// x and y 
+	float pos_x, pos_y;
+	// the name of the Asset or the paragraph of the Questionmark
 	std::string description;
-	float pox_x, pos_y;
 
 public:
-	void update() override;
+	void update();
 	void draw() override;
 	void init() override;
-
 	std::string getDescription();
-	void setDescription(std::string s);
-
+	Card(const int& pos_x, const int& pos_y, const std::string&);
 };

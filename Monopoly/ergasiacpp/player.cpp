@@ -1,10 +1,8 @@
 #include "Player.h"
+#include "Config.h"
 #include "graphics.h"
-
 using namespace graphics;
 
-
-Brush br;
 
 void Player::update()
 {
@@ -22,5 +20,5 @@ void Player::init()
 {
 }
 
-Player::Player(const std::string& icon) { icon_name = icon;}
-Player::Player(const std::string& icon, float y) { icon_name = icon; pos_y = y; }
+Player::Player(const std::string& icon_name): icon_name(icon_name) {}
+Player::Player(const std::string& icon_name, float pos_y): icon_name(icon_name), pos_y(pos_y) {}
