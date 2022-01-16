@@ -8,6 +8,8 @@ void Game::update() {
 		player1 = new Player("cap.png");
 		player2 = new Player("car.png",480);
 	}
+	if (player1)
+		player1->update();
 }
 
 // draw()
@@ -19,13 +21,15 @@ void Game::draw() {
 	// draw background
 	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
 
+	kafe1.draw();
+
 	// draw player
 	if (player1 && player2) {
 		player1->draw();
 		player2->draw();
 	}
 
-	kafe1.draw();
+	
 
 	//draw cards
 	/*
