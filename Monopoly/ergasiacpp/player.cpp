@@ -3,7 +3,7 @@
 #include "graphics.h"
 using namespace graphics;
 
-bool hold = false;
+bool hold = true;
 
 void Player::update()
 {
@@ -20,12 +20,7 @@ void Player::update()
 			pos_y = my;
 			hold = true;
 		}
-		else
-		{
-			hold = false;
-		}
 	}
-
 }
 
 void Player::draw()
@@ -39,6 +34,11 @@ void Player::draw()
 
 void Player::init()
 {
+}
+
+int Player::getCounter()
+{
+	return counter;
 }
 
 Player::Player(const std::string& icon_name): icon_name(icon_name) {}

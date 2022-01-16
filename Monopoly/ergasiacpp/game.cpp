@@ -8,8 +8,11 @@ void Game::update() {
 		player1 = new Player("cap.png");
 		player2 = new Player("car.png",480);
 	}
-	if (player1)
+	
+	if (player1 && player1->getCounter() % 2 == 0)
 		player1->update();
+	else if (player2)
+		player2->update();
 }
 
 // draw()

@@ -1,4 +1,7 @@
-﻿  player.cpp
+﻿  game.cpp
+  main.cpp
+  player.cpp
 C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\player.cpp(12,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\player.cpp(13,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   ergasiacpp.vcxproj -> C:\Users\panos\Desktop\ergasiacpp\Monopoly\bin\ergasiacppd.exe
