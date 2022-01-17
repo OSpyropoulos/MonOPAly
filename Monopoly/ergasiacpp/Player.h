@@ -4,9 +4,10 @@
 
 class Player : public GameObject{
 private:
-	float pos_x = 730, pos_y = 450;
-	int counter = 0;
+	float pos_x, pos_y;
+	int counter = 1;
 	std::string icon_name;
+	bool active = false;
 
 public:
 	void update() override;
@@ -15,6 +16,14 @@ public:
 
 	int getCounter();
 
+	float getPos_x();
+	float getPos_y();
+	void setPos_x(float x);
+	void setPos_y(float y);
+	void setActive(bool x);
+
 	Player(const std::string&);
 	Player(const std::string&, float y);
+
+	bool contains(float x, float y);
 };

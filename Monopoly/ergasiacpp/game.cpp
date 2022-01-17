@@ -1,19 +1,42 @@
 #include "Game.h"
+#include "graphics.h"
 
 using namespace graphics;
+int counter = 0;
 
 // update()
 void Game::update() {
-	if (getGlobalTime() > 2000) {
-		player1 = new Player("cap.png");
-		player2 = new Player("car.png",480);
-	}
+
+	MouseState ms;
+	getMouseState(ms);
+	float mx = windowToCanvasX(ms.cur_pos_x);
+	float my = windowToCanvasY(ms.cur_pos_y);
+
+	Player* cur_player = nullptr;
 	
-	if (player1 && player1->getCounter() % 2 == 0)
-		player1->update();
-	else if (player2)
-		player2->update();
+	if (counter % 2 == 0)
+		cur_player = player1;
+	else
+		cur_player = player2;
+
+	if (cur_player->contains(mx, my))
+		active_player = cur_player;
+
+	//moving a player
+	if (ms.dragging && active_player)
+	{
+		active_player->setPos_x(mx);
+		active_player->setPos_y(my);
+	}
+	if (ms.button_left_released && active_player)
+	{
+		active_player->setActive(false);
+		active_player = nullptr;
+		counter++;
+	}
+
 }
+
 
 // draw()
 void Game::draw() {
@@ -45,7 +68,12 @@ void Game::draw() {
 
 // init()
 void Game::init() {
-
+	player1 = new Player("cap.png");
+	player1->setPos_x(730);
+	player1->setPos_y(450);
+	player2 = new Player("car.png");
+	player2->setPos_x(730);
+	player2->setPos_y(480);
 }
 
 // Constructor
