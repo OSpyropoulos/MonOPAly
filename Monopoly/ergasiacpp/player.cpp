@@ -26,11 +26,6 @@ void Player::init()
 {
 }
 
-int Player::getCounter()
-{
-	return counter;
-}
-
 float Player::getPos_x()
 {
 	return pos_x;
@@ -50,17 +45,38 @@ void Player::setPos_y(float y)
 {
 	pos_y = y;
 }
+float Player::getstartingPos_x()
+{
+	return startingPos_x;
+}
+
+float Player::getstartingPos_y()
+{
+	return startingPos_y;
+}
+
+void Player::setstartingPos_x(float x)
+{
+	startingPos_x = x;
+}
+
+void Player::setstartingPos_y(float y)
+{
+	startingPos_y = y;
+}
 void Player::setActive(bool x)
 {
 	active = x;
 }
+
+// returns true if the cursor is on a player
 bool Player::contains(float x, float y)
 {
 	return (x >= pos_x - 30 && x <= pos_x + 30 && y <= pos_y + 30 && y >= pos_y - 30);
 }
 
+
 Player::Player(const std::string& icon_name): icon_name(icon_name) {}
 Player::Player(const std::string& icon_name, float pos_y): icon_name(icon_name), pos_y(pos_y) {}
 
-// returns true if the cursor is on a player
 

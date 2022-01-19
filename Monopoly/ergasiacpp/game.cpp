@@ -25,16 +25,23 @@ void Game::update() {
 	//moving a player
 	if (ms.dragging && active_player)
 	{
-		active_player->setPos_x(mx);
-		active_player->setPos_y(my);
+		if (mx > 225 && mx < 772 && my <490 && my > 10) //restricting the player within the borders
+		{
+			if (my > 445 || my < 40 && mx >300 && mx <710 || mx <300 || mx >710)
+			{
+				active_player->setPos_x(mx);
+				active_player->setPos_y(my);
+			}
+		}
 	}
 	if (ms.button_left_released && active_player)
 	{
+		active_player->setstartingPos_x(mx);
+		active_player->setstartingPos_y(my);
 		active_player->setActive(false);
 		active_player = nullptr;
 		counter++;
 	}
-
 }
 
 
@@ -71,9 +78,13 @@ void Game::init() {
 	player1 = new Player("cap.png");
 	player1->setPos_x(730);
 	player1->setPos_y(450);
+	player1->setstartingPos_x(730);
+	player1->setstartingPos_y(450);
 	player2 = new Player("car.png");
 	player2->setPos_x(730);
 	player2->setPos_y(480);
+	player2->setstartingPos_x(730);
+	player2->setstartingPos_y(480);
 }
 
 // Constructor

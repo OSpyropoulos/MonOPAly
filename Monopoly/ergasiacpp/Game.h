@@ -28,8 +28,7 @@ protected:
 
 
 public:
-	enum game_state_t {STATE_INIT , STATE_IDLE , STATE_MOVING};
-
+	
 	void update();
 	void draw();
 	void init();
