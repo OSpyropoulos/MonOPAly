@@ -1,4 +1,62 @@
 #include "Asset.h"
+#include "graphics.h"
+using namespace graphics;
+
+void Asset::draw()
+{
+	Brush br;
+	if (region == 0) {
+		br.fill_color[0] = 0.58f;
+		br.fill_color[1] = 0.32f;
+		br.fill_color[2] = 0.2f;
+	}
+	else if(region==1)
+	{
+		br.fill_color[0] = 0.67f;
+		br.fill_color[1] = 0.86f;
+		br.fill_color[2] = 0.99f;
+	}
+	else if (region == 2)
+	{
+		br.fill_color[0] = 0.85f;
+		br.fill_color[1] = 0.22f;
+		br.fill_color[2] = 0.6f;
+	}
+	else if (region == 3)
+	{
+		br.fill_color[0] = 0.97f;
+		br.fill_color[1] = 0.58f;
+		br.fill_color[2] = 0.1f;
+	}
+	else if (region == 4)
+	{
+		br.fill_color[0] = 0.94f;
+		br.fill_color[1] = 0.1f;
+		br.fill_color[2] = 0.13f;
+	}
+	else if (region == 5)
+	{
+		br.fill_color[0] = 1.0f;
+		br.fill_color[1] = 0.94f;
+		br.fill_color[2] = 0;
+	}
+	else if (region == 6)
+	{
+		br.fill_color[0] = 0.15f;
+		br.fill_color[1] = 0.69f;
+		br.fill_color[2] = 0.36f;
+	}
+	else if (region == 7)
+	{
+		br.fill_color[0] = 0.01f;
+		br.fill_color[1] = 0.44f;
+		br.fill_color[2] = 0.73f;
+	}
+	br.fill_opacity = 0.6f;
+	br.outline_opacity = 0.0f;
+	drawRect(pos_x, pos_y, 71, 65, br);
+}
+
 
 // returns the price of the asset
 int Asset::getPrice()

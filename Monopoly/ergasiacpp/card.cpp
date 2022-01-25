@@ -11,15 +11,30 @@ void Card::update()
 
 void Card::draw()
 {
-	Brush br;
-	br.fill_color[0] = 0.58f;
-	br.fill_color[1] = 0.32f;
-	br.fill_color[2] = 0.2f;
-	drawRect(pos_x, pos_y, 75, 55, br);
 }
 
 void Card::init()
 {
+}
+
+float Card::getX()
+{
+	return pos_x;
+}
+
+void Card::setX(float x)
+{
+	pos_x = x;
+}
+
+float Card::getY()
+{
+	return pos_y;
+}
+
+void Card::setY(float y)
+{
+	pos_y = y;
 }
 
 // if the Card object is Asset, returns the name, else (if Questionmark) returns the paragraph 

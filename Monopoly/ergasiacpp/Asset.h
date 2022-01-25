@@ -12,6 +12,7 @@ protected:
 	bool IsOwned = false;
 
 public:
+	void draw() override;
 	int getPrice();
 	int getRegion();
 	int getRank();

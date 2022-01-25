@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "graphics.h"
+#include <stdlib.h>
+#include <algorithm>
 
 using namespace graphics;
 int counter = 0;
@@ -41,6 +43,8 @@ void Game::update() {
 		active_player->setActive(false);
 		active_player = nullptr;
 		counter++;
+
+		//std::random_shuffle(std::begin(assets), std::end(assets));
 	}
 }
 
@@ -51,10 +55,10 @@ void Game::draw() {
 	br.texture = std::string(ASSET_PATH) + "board.png";
 	br.outline_opacity = 0.0f;
 
+
+
 	// draw background
 	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
-
-	kafe1.draw();
 
 	// draw player
 	if (player1 && player2) {
@@ -62,14 +66,10 @@ void Game::draw() {
 		player2->draw();
 	}
 
-	
-
 	//draw cards
-	/*
-	* 	for (int i; i < 28; i++) {
-		cards[i]->draw();
+	for (int i=0; i < 20; i++) {
+		assets[i].draw();
 	}
-	*/
 
 }
 
