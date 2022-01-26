@@ -19,4 +19,5 @@ public:
 	void setY(float y);
 	std::string getDescription();
 	Card(const int& pos_x, const int& pos_y, const std::string&);
+
 };

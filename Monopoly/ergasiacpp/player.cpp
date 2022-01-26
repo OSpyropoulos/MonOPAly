@@ -26,6 +26,16 @@ void Player::init()
 {
 }
 
+float Player::getBalance()
+{
+	return balance;
+}
+
+void Player::setBalance(float x)
+{
+	balance = x;
+}
+
 float Player::getPos_x()
 {
 	return pos_x;

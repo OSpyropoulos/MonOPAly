@@ -6,6 +6,7 @@ class Player : public GameObject{
 private:
 	float pos_x, pos_y;
 	float startingPos_x, startingPos_y;
+	float balance;
 	std::string icon_name;
 	bool active = false;
 
@@ -13,6 +14,9 @@ public:
 	void update() override;
 	void draw() override;
 	void init() override;
+
+	float getBalance();
+	void setBalance(float x);
 
 	float getPos_x();
 	float getPos_y();
