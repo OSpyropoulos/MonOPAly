@@ -13,6 +13,7 @@ protected:
 	Player *player1 = nullptr;
 	Player *player2 = nullptr;
 
+	Player* cur_player = nullptr;
 	Player* active_player = nullptr;
 
 	// 27 cards in total

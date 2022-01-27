@@ -5,7 +5,8 @@
 #include <iostream>
 
 using namespace graphics;
-int counter = 0;
+int counter = 0 , i, price;
+bool isOwned = false;
 std::string desc;
 
 // update()
@@ -15,8 +16,6 @@ void Game::update() {
 	getMouseState(ms);
 	float mx = windowToCanvasX(ms.cur_pos_x);
 	float my = windowToCanvasY(ms.cur_pos_y);
-
-	Player* cur_player = nullptr;
 	
 	if (counter % 2 == 0)
 		cur_player = player1;
@@ -35,6 +34,7 @@ void Game::update() {
 			{
 				active_player->setPos_x(mx);
 				active_player->setPos_y(my);
+				desc = "";
 			}
 		}
 	}
@@ -42,16 +42,16 @@ void Game::update() {
 	{
 		counter++;
 
-		if (active_player->getPos_y() >445 && active_player->getPos_y()<500)
+		if (active_player->getPos_y() > 445 && active_player->getPos_y() < 490 && active_player->getPos_x() < 700 && active_player->getPos_x() > 630)
 		{
-			if (active_player->getPos_x() < 670 && active_player->getPos_x() > 607)
-			{
-				desc = assets[1].getDescription();
-				std::cout << "Mphka";
-			}
+			i = rand() % 20;
+			desc = assets[i].getDescription();
+			price = assets[i].getPrice();
+			isOwned = assets[i].getIsOwned();
+				
 		}
 		active_player->setActive(false);
-		//active_player = nullptr;
+		active_player = nullptr;
 
 		//std::random_shuffle(std::begin(assets), std::end(assets));
 	}
@@ -85,29 +85,43 @@ void Game::draw() {
 		drawText(850, 80, 20, board, br);
 	}
 
-	std::cout << desc;
-
-	//draw asset description
+	//draw asset
 	if (desc != "")
 	{
-		char card[50];
-		sprintf_s(card, "Description: %s" , desc);
-		drawText(415, 180, 40, card, br);
+		char p[50];
+		sprintf_s(p, "Description:");
+		drawText(400, 180, 20, p, br);
+		sprintf_s(p ,"%s", desc.c_str());
+		drawText(500, 180, 20, p, br);
+		if (!isOwned)
+			sprintf_s(p, "Price:");
+			drawText(400, 210, 20, p, br);
+			sprintf_s(p, std::to_string(price).c_str());
+			drawText(500, 210, 20, p, br);
 	}
+	//draw asset description
+	//if (desc != "")
+	//{
+		//char card[50];
+		//sprintf_s(card, "Description: %s" , desc);
+		//drawText(415, 180, 40, card, br);
+	//}
 
 	// draw player
 	if (player1 && player2) {
 		player1->draw();
 		player2->draw();
 	}
+
+	// draw whose turn is it to move
 	if (player1 && player2)
 	{
 		char info[50];
-		if (active_player == player1)
-			sprintf_s(info,"cap move");
+		if (cur_player == player1)
+			sprintf_s(info, "cap move");
 		else
 			sprintf_s(info, "car move");
-		drawText(425, 200, 40, info, br);
+		drawText(425, 260, 40, info, br);
 	}
 
 }
@@ -118,20 +132,13 @@ void Game::init() {
 	player1->setPos_x(730);
 	player1->setPos_y(450);
 	player1->setBalance(2000);
-
-	player1->setstartingPos_x(730);
-	player1->setstartingPos_y(450);
 	
 	player2 = new Player("car.png");
 	player2->setPos_x(730);
 	player2->setPos_y(480);
 	player2->setBalance(2000);
 
-	player2->setstartingPos_x(730);
-	player2->setstartingPos_y(480);
 
-
-	Brush br;
 	setFont(std::string(ASSET_PATH) + "font.ttf");
 
 

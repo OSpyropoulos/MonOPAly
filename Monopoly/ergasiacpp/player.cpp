@@ -55,25 +55,7 @@ void Player::setPos_y(float y)
 {
 	pos_y = y;
 }
-float Player::getstartingPos_x()
-{
-	return startingPos_x;
-}
 
-float Player::getstartingPos_y()
-{
-	return startingPos_y;
-}
-
-void Player::setstartingPos_x(float x)
-{
-	startingPos_x = x;
-}
-
-void Player::setstartingPos_y(float y)
-{
-	startingPos_y = y;
-}
 void Player::setActive(bool x)
 {
 	active = x;

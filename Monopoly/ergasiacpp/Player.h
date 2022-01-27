@@ -23,10 +23,6 @@ public:
 	void setPos_x(float x);
 	void setPos_y(float y);
 
-	float getstartingPos_x();
-	float getstartingPos_y();
-	void setstartingPos_x(float x);
-	void setstartingPos_y(float y);
 
 	void setActive(bool x);
 
