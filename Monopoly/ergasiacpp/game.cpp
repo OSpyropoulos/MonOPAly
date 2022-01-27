@@ -94,18 +94,13 @@ void Game::draw() {
 		sprintf_s(p ,"%s", desc.c_str());
 		drawText(500, 180, 20, p, br);
 		if (!isOwned)
+		{
 			sprintf_s(p, "Price:");
 			drawText(400, 210, 20, p, br);
 			sprintf_s(p, std::to_string(price).c_str());
 			drawText(500, 210, 20, p, br);
+		}
 	}
-	//draw asset description
-	//if (desc != "")
-	//{
-		//char card[50];
-		//sprintf_s(card, "Description: %s" , desc);
-		//drawText(415, 180, 40, card, br);
-	//}
 
 	// draw player
 	if (player1 && player2) {
