@@ -5,7 +5,7 @@ class Asset : public Card{
 
 protected:
 	// price = amount of cash & region = color/quality of the card
-	const int price , region;
+	int price , region;
 	// the number of the rank is equal to how many houses are built
 	int rank = 0;
 	// IsOwned -> true if it is not available, false if it is
