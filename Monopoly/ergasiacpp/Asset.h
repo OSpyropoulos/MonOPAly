@@ -23,6 +23,7 @@ public:
 	bool getIsOwnedbyPlayer1();
 	void setIsOwnedbyPlayer1();
 
+
 	Asset(const int&, const int&, const std::string&, const int&, const int&);
 
 

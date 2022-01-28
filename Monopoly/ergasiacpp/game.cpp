@@ -7,12 +7,11 @@
 
 using namespace graphics;
 int counter = 0 , i, price;
-bool isOwned = false, isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false;
+bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false;
 std::string desc;
 
 // update()
 void Game::update() {
-
 	MouseState ms;
 	getMouseState(ms);
 	float mx = windowToCanvasX(ms.cur_pos_x);
@@ -64,11 +63,10 @@ void Game::update() {
 		for (int i = 0; i < 20; i++)
 		{
 			if (mx > assets[i].getX() - 35 && mx<assets[i].getX() + 10 && my>assets[i].getY() - 40 && my < assets[i].getY() + 30) {
-				cur_asset = assets[i];
-				desc = cur_asset.getDescription();
-				price = cur_asset.getPrice();
-				isOwned = cur_asset.getIsOwned();
-				isOwnedbyPlayer1 = cur_asset.getIsOwnedbyPlayer1();
+				cur_asset = &assets[i];
+				desc = cur_asset->getDescription();
+				price = cur_asset->getPrice();
+				isOwnedbyPlayer1 = cur_asset->getIsOwnedbyPlayer1();
 				ongoingPayment = true;
 				cantpurchase = false;
 			}
@@ -81,37 +79,45 @@ void Game::update() {
 		//auto rng = std::default_random_engine{};
 		//std::shuffle(std::begin(assets), std::end(assets), rng);
 	}
-
-	if (isOwned && ongoingPayment)
+	
+	// if the property is owned
+	if (cur_asset->getIsOwned() && ongoingPayment)
 	{
+		// +- price*0.1 for each player (you can change it if you want the game to be faster)
 		if (isOwnedbyPlayer1)
 		{
+			// player2, because player changes when you release the left button
 			if (cur_player == player2)
 			{
-				player1->setBalance(player1->getBalance() + cur_asset.getPrice());
-				player2->setBalance(player2->getBalance() - cur_asset.getPrice());
+				player1->setBalance(player1->getBalance() + (cur_asset->getPrice()*0.1));
+				player2->setBalance(player2->getBalance() - (cur_asset->getPrice()*0.1));
 			}
 		}
 		else
+		{
+			// player1, because player changes when you release the left button
 			if (cur_player == player1)
 			{
-				player1->setBalance(player1->getBalance() - cur_asset.getPrice());
-				player2->setBalance(player2->getBalance() + cur_asset.getPrice());
+				player1->setBalance(player1->getBalance() - (cur_asset->getPrice()*0.1));
+				player2->setBalance(player2->getBalance() + (cur_asset->getPrice()*0.1));
 			}
+		}
 		ongoingPayment = false;
 	}
-	else if (ongoingPayment && !isOwned)
+	// if it is available
+	else if (ongoingPayment && !cur_asset->getIsOwned())
 	{
 		if (getKeyState(SCANCODE_Y))
 		{
 			if (cur_player->getBalance() > price)
 			{
 				ongoingPayment = false;
-				cur_asset.setIsOwned();
-				isOwned = true;
-				cur_player->setBalance(cur_player->getBalance() - cur_asset.getPrice());
-				if (cur_player == player1)
-					cur_asset.setIsOwnedbyPlayer1();
+				cur_asset->setIsOwned();
+				// same logic... current player is the other player
+				next_player->setBalance(next_player->getBalance() - cur_asset->getPrice());
+				// same logic... player2, because player changes when you release the left button
+				if (cur_player == player2) 
+					cur_asset->setIsOwnedbyPlayer1();
 			}
 			else
 				cantpurchase = true;
@@ -180,7 +186,7 @@ void Game::draw() {
 		char info[50];
 	
 		// question for acquisition
-		if (isOwned == false) {
+		if (cur_asset->getIsOwned()==false) {
 			if (cantpurchase)
 			{
 				sprintf_s(info, "Not enough funds");
@@ -213,13 +219,13 @@ void Game::draw() {
 			// if the current player can't afford the fine -> GAME OVER
 			if ((price * 0.1) > cur_player->getBalance())
 			{
-			sprintf_s(info, "GAME IS OVER");
-			drawText(355, 190, 37, info, br);
+				sprintf_s(info, "GAME IS OVER");
+				drawText(355, 190, 37, info, br);
 			}
 			else
 			{
-			sprintf_s(info, "Property owned");
-			drawText(355, 190, 37, info, br);
+				sprintf_s(info, "You own the property");
+				drawText(350, 190, 37, info, br);
 			}
 		}
 		// whose turn it is next

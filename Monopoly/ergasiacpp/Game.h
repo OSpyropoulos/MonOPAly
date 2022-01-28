@@ -53,8 +53,8 @@ protected:
 
 	// 20 asset Cards
 	std::vector<Asset> assets = { brown1,brown2,lightblue1,lightblue2,lightblue3,pink1,pink2,orange1,orange2,orange3,red1,red2,red3,yellow1,yellow2,green1,green2,green3,blue1,blue2 };
-
-	Asset cur_asset=assets[0];
+	// initialize the pointer
+	Asset* cur_asset = &assets[1];
 
 	// 4 questionmark Cards
 	//Questionmark questionmarks[4];
