@@ -4,13 +4,10 @@
 #include "Game.h"
 
 using namespace graphics;
-
-bool hold = false;
-bool ended = false;
+using namespace std;
 
 void Player::update()
 {
-
 }
 
 void Player::draw()
@@ -60,6 +57,7 @@ void Player::setActive(bool x)
 {
 	active = x;
 }
+
 
 // returns true if the cursor is on a player
 bool Player::contains(float x, float y)

@@ -10,6 +10,7 @@ protected:
 	int rank = 0;
 	// IsOwned -> true if it is not available, false if it is
 	bool IsOwned = false;
+	bool IsOwnedbyPlayer1 = false;
 
 public:
 	void draw() override;
@@ -19,6 +20,11 @@ public:
 	void upgradeRank();
 	bool getIsOwned();
 	void setIsOwned();
+	bool getIsOwnedbyPlayer1();
+	void setIsOwnedbyPlayer1();
+
 	Asset(const int&, const int&, const std::string&, const int&, const int&);
+
+
 
 };

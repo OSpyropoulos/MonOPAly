@@ -7,7 +7,7 @@
 
 using namespace graphics;
 int counter = 0 , i, price;
-bool isOwned = false;
+bool isOwned = false, isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false;
 std::string desc;
 
 // update()
@@ -17,13 +17,13 @@ void Game::update() {
 	getMouseState(ms);
 	float mx = windowToCanvasX(ms.cur_pos_x);
 	float my = windowToCanvasY(ms.cur_pos_y);
-	
+
 	if (counter % 2 == 0)
 	{
 		cur_player = player1;
 		next_player = player2;
 	}
-	else 
+	else
 	{
 		cur_player = player2;
 		next_player = player1;
@@ -35,9 +35,9 @@ void Game::update() {
 	//moving a player
 	if (ms.dragging && active_player)
 	{
-		if (mx > 225 && mx < 772 && my <490 && my > 10) //restricting the player within the borders
+		if (mx > 225 && mx < 772 && my < 490 && my > 10) //restricting the player within the borders
 		{
-			if (my > 445 || my < 40 && mx >300 && mx <710 || mx <300 || mx >710)
+			if (my > 445 || my < 40 && mx >300 && mx < 710 || mx < 300 || mx >710)
 			{
 				active_player->setPos_x(mx);
 				active_player->setPos_y(my);
@@ -48,37 +48,74 @@ void Game::update() {
 
 	if (ms.button_left_released && active_player)
 	{
-		counter++;
 
 		// "shuffle" the cards (just change the position)
-		for (i = 0; i < 20; i++)
+		//for (i = 0; i < 20; i++)
 		{
-			size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
-			float tempX = assets[j].getX();
-			float tempY = assets[j].getY();
-			assets[j].setX(assets[i].getX());
-			assets[j].setY(assets[i].getY());
-			assets[i].setX(tempX);
-			assets[i].setY(tempY);
+			//size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
+			//float tempX = assets[j].getX();
+			//float tempY = assets[j].getY();
+			//assets[j].setX(assets[i].getX());
+			//assets[j].setY(assets[i].getY());
+			//assets[i].setX(tempX);
+			//assets[i].setY(tempY);
 		}
 
 		for (int i = 0; i < 20; i++)
 		{
 			if (mx > assets[i].getX() - 35 && mx<assets[i].getX() + 10 && my>assets[i].getY() - 40 && my < assets[i].getY() + 30) {
 				cur_asset = assets[i];
-				desc = assets[i].getDescription();
-				price = assets[i].getPrice();
-				isOwned = assets[i].getIsOwned();
+				desc = cur_asset.getDescription();
+				price = cur_asset.getPrice();
+				isOwned = cur_asset.getIsOwned();
+				isOwnedbyPlayer1 = cur_asset.getIsOwnedbyPlayer1();
+				ongoingPayment = true;
+				cantpurchase = false;
 			}
 		}
-		
+
+		counter++;
 		active_player->setActive(false);
 		active_player = nullptr;
 
-
-
 		//auto rng = std::default_random_engine{};
 		//std::shuffle(std::begin(assets), std::end(assets), rng);
+	}
+
+	if (isOwned && ongoingPayment)
+	{
+		if (isOwnedbyPlayer1)
+		{
+			if (cur_player == player2)
+			{
+				player1->setBalance(player1->getBalance() + cur_asset.getPrice());
+				player2->setBalance(player2->getBalance() - cur_asset.getPrice());
+			}
+		}
+		else
+			if (cur_player == player1)
+			{
+				player1->setBalance(player1->getBalance() - cur_asset.getPrice());
+				player2->setBalance(player2->getBalance() + cur_asset.getPrice());
+			}
+		ongoingPayment = false;
+	}
+	else if (ongoingPayment && !isOwned)
+	{
+		if (getKeyState(SCANCODE_Y))
+		{
+			if (cur_player->getBalance() > price)
+			{
+				ongoingPayment = false;
+				cur_asset.setIsOwned();
+				isOwned = true;
+				cur_player->setBalance(cur_player->getBalance() - cur_asset.getPrice());
+				if (cur_player == player1)
+					cur_asset.setIsOwnedbyPlayer1();
+			}
+			else
+				cantpurchase = true;
+		}
 	}
 }
 
@@ -128,7 +165,6 @@ void Game::draw() {
 		drawText(820, 80, 20, board, br);
 	}
 
-
 	// draw player
 	if (player1 && player2) {
 		player1->draw();
@@ -142,46 +178,34 @@ void Game::draw() {
 		br.fill_color[1] = 1.0f;
 		br.fill_color[2] = 1.0f;
 		char info[50];
-
 	
 		// question for acquisition
 		if (isOwned == false) {
-			sprintf_s(info, "Do you want to Buy ");
-			drawText(348, 190, 22, info, br);
-			sprintf_s(info, "Y (for Yes)  ||   N (for No)");
-			drawText(430, 220, 15, info, br);
-
-			br.fill_color[0] = 0;
-			br.fill_color[1] = 0;
-			br.fill_color[2] = 0;
-			sprintf_s(info, "%s",desc.c_str());
-			// if the asset's description is big
-			if (desc.length() > 10)
+			if (cantpurchase)
 			{
-				drawText(510, 190, 20, info, br);
+				sprintf_s(info, "Not enough funds");
+				drawText(355, 190, 37, info, br);
 			}
-			else 
+			else
 			{
-				drawText(520, 190, 30, info, br);
-			}
+				sprintf_s(info, "Do you want to Buy ");
+				drawText(348, 190, 22, info, br);
+				sprintf_s(info, "Y (for Yes)  ||   N (for No)");
+				drawText(430, 220, 15, info, br);
 
-			if (getKeyState(SCANCODE_Y))
-			{
-				if (price <= cur_player->getBalance())
+				br.fill_color[0] = 0;
+				br.fill_color[1] = 0;
+				br.fill_color[2] = 0;
+				sprintf_s(info, "%s", desc.c_str());
+				// if the asset's description is big
+				if (desc.length() > 10)
 				{
-					float temp = cur_player->getBalance() - price;
-					std::cout << "temp: " << temp << std::endl;
-					cur_player->setBalance(temp);
+					drawText(510, 190, 20, info, br);
 				}
 				else
 				{
-					sprintf_s(info, "Sorry, no cash available");
-					drawText(400, 190, 30, info, br);
+					drawText(520, 190, 30, info, br);
 				}
-			}
-			else if (getKeyState(SCANCODE_N))
-			{
-
 			}
 		}
 		// message for payment
@@ -189,15 +213,13 @@ void Game::draw() {
 			// if the current player can't afford the fine -> GAME OVER
 			if ((price * 0.1) > cur_player->getBalance())
 			{
-				sprintf_s(info, "GAME IS OVER");
-				drawText(355, 190, 37, info, br);
+			sprintf_s(info, "GAME IS OVER");
+			drawText(355, 190, 37, info, br);
 			}
 			else
 			{
-				sprintf_s(info, "Ugh...you are - %6.1f", price * 0.1);
-				drawText(355, 190, 37, info, br);
-				cur_player->setBalance(cur_player->getBalance() - (price * 0.1));
-				next_player->setBalance(next_player->getBalance() + (price * 0.1));
+			sprintf_s(info, "Property owned");
+			drawText(355, 190, 37, info, br);
 			}
 		}
 		// whose turn it is next

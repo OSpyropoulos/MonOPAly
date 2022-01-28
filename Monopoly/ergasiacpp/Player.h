@@ -1,6 +1,7 @@
 #pragma once
 #include "Gameobject.h"
 #include <string>
+#include "Asset.h"
 
 class Player : public GameObject{
 private:
@@ -9,6 +10,7 @@ private:
 	float balance;
 	std::string icon_name;
 	bool active = false;
+	int i = 0;
 
 public:
 	void update() override;
@@ -23,10 +25,8 @@ public:
 	void setPos_x(float x);
 	void setPos_y(float y);
 
-
 	void setActive(bool x);
-
-
+	
 	Player(const std::string&);
 	Player(const std::string&, float y);
 
