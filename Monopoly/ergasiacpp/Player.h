@@ -5,7 +5,7 @@
 
 class Player : public GameObject{
 private:
-	float pos_x, pos_y;
+	float pos_x, pos_y, prevPosx, prevPosy;
 	float startingPos_x, startingPos_y;
 	float balance;
 	std::string icon_name;
@@ -24,6 +24,11 @@ public:
 	float getPos_y();
 	void setPos_x(float x);
 	void setPos_y(float y);
+
+	float getprevPos_x();
+	float getprevPos_y();
+	void setprevPos_x(float x);
+	void setprevPos_y(float y);
 
 	void setActive(bool x);
 	

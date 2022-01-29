@@ -15,8 +15,7 @@ void Player::draw()
 	Brush br;
 	br.texture = std::string(ASSET_PATH) + icon_name;
 	br.outline_opacity = 0.0f;
-	drawRect(pos_x, pos_y,60,60, br);
-	
+	drawRect(pos_x, pos_y,50,50, br);
 }
 
 void Player::init()
@@ -51,6 +50,26 @@ void Player::setPos_x(float x)
 void Player::setPos_y(float y)
 {
 	pos_y = y;
+}
+
+float Player::getprevPos_x()
+{
+	return prevPosx;
+}
+
+float Player::getprevPos_y()
+{
+	return prevPosy;
+}
+
+void Player::setprevPos_x(float x)
+{
+	prevPosx = x;
+}
+
+void Player::setprevPos_y(float y)
+{
+	prevPosy = y;
 }
 
 void Player::setActive(bool x)

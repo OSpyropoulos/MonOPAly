@@ -7,7 +7,7 @@
 
 using namespace graphics;
 int counter = 0 , i, price;
-bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false;
+bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false, feetoplayer = false;;
 std::string desc;
 
 // update()
@@ -38,26 +38,31 @@ void Game::update() {
 		{
 			if (my > 445 || my < 40 && mx >300 && mx < 710 || mx < 300 || mx >710)
 			{
-				active_player->setPos_x(mx);
-				active_player->setPos_y(my);
-				desc = "";
+				if (mx < active_player->getprevPos_x() && my > 445 || mx < 300 && my < active_player->getprevPos_y() || my < 40 && mx > active_player->getprevPos_x() || mx > 710 && my > active_player->getprevPos_y())
+				{
+					active_player->setPos_x(mx);
+					active_player->setPos_y(my);
+					desc = "";
+				}
 			}
 		}
 	}
 
 	if (ms.button_left_released && active_player)
 	{
+		cur_player->setprevPos_x(mx);
+		cur_player->setprevPos_y(my);
 
 		// "shuffle" the cards (just change the position)
-		//for (i = 0; i < 20; i++)
+		for (i = 0; i < 20; i++)
 		{
-			//size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
-			//float tempX = assets[j].getX();
-			//float tempY = assets[j].getY();
-			//assets[j].setX(assets[i].getX());
-			//assets[j].setY(assets[i].getY());
-			//assets[i].setX(tempX);
-			//assets[i].setY(tempY);
+			size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
+			float tempX = assets[j].getX();
+			float tempY = assets[j].getY();
+			assets[j].setX(assets[i].getX());
+			assets[j].setY(assets[i].getY());
+			assets[i].setX(tempX);
+			assets[i].setY(tempY);
 		}
 
 		for (int i = 0; i < 20; i++)
@@ -69,6 +74,7 @@ void Game::update() {
 				isOwnedbyPlayer1 = cur_asset->getIsOwnedbyPlayer1();
 				ongoingPayment = true;
 				cantpurchase = false;
+				feetoplayer = false;
 			}
 		}
 
@@ -91,6 +97,7 @@ void Game::update() {
 			{
 				player1->setBalance(player1->getBalance() + (cur_asset->getPrice()*0.1));
 				player2->setBalance(player2->getBalance() - (cur_asset->getPrice()*0.1));
+				feetoplayer = true;
 			}
 		}
 		else
@@ -100,6 +107,7 @@ void Game::update() {
 			{
 				player1->setBalance(player1->getBalance() - (cur_asset->getPrice()*0.1));
 				player2->setBalance(player2->getBalance() + (cur_asset->getPrice()*0.1));
+				feetoplayer = true;
 			}
 		}
 		ongoingPayment = false;
@@ -222,6 +230,15 @@ void Game::draw() {
 				sprintf_s(info, "GAME IS OVER");
 				drawText(355, 190, 37, info, br);
 			}
+			else if (feetoplayer)
+			{
+				sprintf_s(info, "You pay ");
+				drawText(455, 190, 30, info, br);
+				sprintf_s(info, "%d" , cur_asset->getPrice());
+				drawText(560, 190, 30, info, br);
+				sprintf_s(info, "to the other player");
+				drawText(420, 220, 30, info, br);
+			}
 			else
 			{
 				sprintf_s(info, "You own the property");
@@ -244,11 +261,15 @@ void Game::init() {
 	player1->setPos_x(730);
 	player1->setPos_y(450);
 	player1->setBalance(2000);
+	player1->setprevPos_x(730);
+	player1->setprevPos_y(450);
 	
 	player2 = new Player("car.png");
 	player2->setPos_x(730);
 	player2->setPos_y(480);
 	player2->setBalance(2000);
+	player2->setprevPos_x(730);
+	player2->setprevPos_y(480);
 
 	setFont(std::string(ASSET_PATH) + "font.ttf");
 	playMusic(std::string(ASSET_PATH) + "soundtrack.mp3",0.1f,false,4000);
