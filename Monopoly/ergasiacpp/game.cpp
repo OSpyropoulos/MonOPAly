@@ -7,7 +7,8 @@
 
 using namespace graphics;
 int counter = 0 , i, price;
-bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false, feetoplayer = false;;
+int p1 = 0, p2 = 0;
+bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false, feetoplayer = false, gameover = false;
 std::string desc;
 
 // update()
@@ -54,17 +55,17 @@ void Game::update() {
 		cur_player->setprevPos_y(my);
 
 		// "shuffle" the cards (just change the position)
-		for (i = 0; i < 20; i++)
+		/*for (i = 0; i < 20; i++)
 		{
-			size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
-			float tempX = assets[j].getX();
-			float tempY = assets[j].getY();
-			assets[j].setX(assets[i].getX());
-			assets[j].setY(assets[i].getY());
-			assets[i].setX(tempX);
-			assets[i].setY(tempY);
+		size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
+		float tempX = assets[j].getX();
+		float tempY = assets[j].getY();
+		assets[j].setX(assets[i].getX());
+		assets[j].setY(assets[i].getY());
+		assets[i].setX(tempX);
+		assets[i].setY(tempY);
 		}
-
+		*/
 		for (int i = 0; i < 20; i++)
 		{
 			if (mx > assets[i].getX() - 35 && mx<assets[i].getX() + 10 && my>assets[i].getY() - 40 && my < assets[i].getY() + 30) {
@@ -77,13 +78,13 @@ void Game::update() {
 				feetoplayer = false;
 			}
 		}
-
 		counter++;
 		active_player->setActive(false);
 		active_player = nullptr;
 
-		//auto rng = std::default_random_engine{};
-		//std::shuffle(std::begin(assets), std::end(assets), rng);
+		if (next_player->getBalance() <= 0)
+			gameover = true;
+
 	}
 	
 	// if the property is owned
@@ -93,17 +94,17 @@ void Game::update() {
 		if (isOwnedbyPlayer1)
 		{
 			// player2, because player changes when you release the left button
-			if (cur_player == player2)
+			if (cur_player == player1)
 			{
-				player1->setBalance(player1->getBalance() + (cur_asset->getPrice()*0.1));
-				player2->setBalance(player2->getBalance() - (cur_asset->getPrice()*0.1));
+				player1->setBalance(player1->getBalance() + (cur_asset->getPrice() * 0.1));
+				player2->setBalance(player2->getBalance() - (cur_asset->getPrice() * 0.1));
 				feetoplayer = true;
 			}
 		}
 		else
 		{
 			// player1, because player changes when you release the left button
-			if (cur_player == player1)
+			if (cur_player == player2)
 			{
 				player1->setBalance(player1->getBalance() - (cur_asset->getPrice()*0.1));
 				player2->setBalance(player2->getBalance() + (cur_asset->getPrice()*0.1));
@@ -122,9 +123,9 @@ void Game::update() {
 				ongoingPayment = false;
 				cur_asset->setIsOwned();
 				// same logic... current player is the other player
-				next_player->setBalance(next_player->getBalance() - cur_asset->getPrice());
+				cur_player->setBalance(cur_player ->getBalance() - cur_asset->getPrice());
 				// same logic... player2, because player changes when you release the left button
-				if (cur_player == player2) 
+				if (cur_player == player1)
 					cur_asset->setIsOwnedbyPlayer1();
 			}
 			else
@@ -166,16 +167,42 @@ void Game::draw() {
 		sprintf_s(p, "EUR  %s",std::to_string(assets[i].getPrice()).c_str());
 		drawText(assets[i].getX()-25, assets[i].getY()+20, 15, p, br);
 
+		sprintf_s(p, "Assets owned");
+		drawText(40, 110, 25, p, br);
+
+		sprintf_s(p, "Assets owned");
+		drawText(825, 110, 25, p, br);
+
+		int k = 0;
+		for (int j = 0; j < 20; j++) {
+			if (assets[j].getIsOwnedbyPlayer1())
+			{
+				sprintf_s(p, "%s", assets[j].getDescription().c_str());
+				drawText(850, 130 + k, 20, p, br);
+				k = k + 20;
+			}
+		}
+		k = 0;
+		for (int j = 0; j < 20; j++) {
+			if (!assets[j].getIsOwnedbyPlayer1() && assets[j].getIsOwned())
+			{
+				sprintf_s(p, "%s", assets[j].getDescription().c_str());
+				drawText(80, 130 + k, 20, p, br);
+				k = k + 20;
+			}
+		}
 	}
+
+
 
 	//draw balance
 	if (player1 && player2)
 	{
 		char board[50];
-		sprintf_s(board, "Balance: %6.1f  EUR",player1->getBalance()) ;
+		sprintf_s(board, "Balance: %6.1f  EUR",player2->getBalance()) ;
 		drawText(30, 80, 20 , board, br);
 
-		sprintf_s(board, "Balance: %6.1f  EUR", player2->getBalance());
+		sprintf_s(board, "Balance: %6.1f  EUR", player1->getBalance());
 		drawText(820, 80, 20, board, br);
 	}
 
@@ -204,7 +231,7 @@ void Game::draw() {
 			{
 				sprintf_s(info, "Do you want to Buy ");
 				drawText(348, 190, 22, info, br);
-				sprintf_s(info, "Y (for Yes)  ||   N (for No)");
+				sprintf_s(info, "Y (for Yes)");
 				drawText(430, 220, 15, info, br);
 
 				br.fill_color[0] = 0;
@@ -225,7 +252,7 @@ void Game::draw() {
 		// message for payment
 		else {
 			// if the current player can't afford the fine -> GAME OVER
-			if ((price * 0.1) > cur_player->getBalance())
+			if (gameover)
 			{
 				sprintf_s(info, "GAME IS OVER");
 				drawText(355, 190, 37, info, br);
@@ -234,7 +261,7 @@ void Game::draw() {
 			{
 				sprintf_s(info, "You pay ");
 				drawText(455, 190, 30, info, br);
-				sprintf_s(info, "%d" , cur_asset->getPrice());
+				sprintf_s(info, "%f" , cur_asset->getPrice()*0.1);
 				drawText(560, 190, 30, info, br);
 				sprintf_s(info, "to the other player");
 				drawText(420, 220, 30, info, br);
@@ -260,14 +287,14 @@ void Game::init() {
 	player1 = new Player("cap.png");
 	player1->setPos_x(730);
 	player1->setPos_y(450);
-	player1->setBalance(2000);
+	player1->setBalance(500);
 	player1->setprevPos_x(730);
 	player1->setprevPos_y(450);
 	
 	player2 = new Player("car.png");
 	player2->setPos_x(730);
 	player2->setPos_y(480);
-	player2->setBalance(2000);
+	player2->setBalance(500);
 	player2->setprevPos_x(730);
 	player2->setprevPos_y(480);
 
