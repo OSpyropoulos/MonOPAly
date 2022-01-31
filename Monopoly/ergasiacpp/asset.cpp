@@ -70,17 +70,8 @@ int Asset::getRegion()
 	return region;
 }
 
-// returns the rank of the asset (how many buldings are built on the asset starting from 0)
-int Asset::getRank()
-{
-	return rank;
-}
 
-// upgrades the rank of the assets if a new bulding is bought
-void Asset::upgradeRank()
-{
-	rank++;
-}
+
 
 // returns true if the asset is owned by a player
 

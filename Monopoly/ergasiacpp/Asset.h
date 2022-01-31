@@ -6,8 +6,8 @@ class Asset : public Card {
 protected:
 	// price = amount of cash & region = color/quality of the card
 	int price, region;
-	// the number of the rank is equal to how many houses are built
-	int rank = 0;
+	
+
 	// IsOwned -> true if it is not available, false if it is
 	bool IsOwned = false;
 	bool IsOwnedbyPlayer1 = false;

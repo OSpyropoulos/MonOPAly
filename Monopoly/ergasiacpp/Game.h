@@ -9,7 +9,12 @@ class Game {
 	// the Game has:
 	// 
 	// 2 players
+
+	typedef enum{ STATUS_PLAYING, STATUS_START, STATUS_OVER} status_t;
+	status_t status = STATUS_START;
+
 protected:
+
 
 	int counter = 0;
 
@@ -74,6 +79,15 @@ public:
 	void update();
 	void draw();
 	void init();
+
+	void updateLevelScreen();
+	void updateStartScreen();
+
+	void drawLevelScreen();
+	void drawStartScreen();
+	void drawOverScreen();
+	
+
 	Game();
 	~Game();
 };

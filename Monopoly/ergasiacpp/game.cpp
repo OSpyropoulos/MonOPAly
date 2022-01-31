@@ -7,13 +7,80 @@
 
 using namespace graphics;
 int counter = 0 , i, price;
-int p1 = 0, p2 = 0;
 bool isOwnedbyPlayer1 = false, ongoingPayment = false, cantpurchase = false, feetoplayer = false, gameover = false;
 bool not_q = true;
 std::string desc,q_desc="";
 
 // update()
 void Game::update() {
+	if (status == STATUS_START)
+	{
+		updateStartScreen();
+	}
+	else if (status == STATUS_PLAYING)
+	{
+		updateLevelScreen();
+	}
+}
+
+
+// draw()
+void Game::draw() {
+	if (status == STATUS_START)
+	{
+		drawStartScreen();
+	}
+	else if (status == STATUS_PLAYING)
+	{
+		drawLevelScreen();
+	}
+	else
+		drawOverScreen();
+}
+
+// init()
+void Game::init() {
+	player1 = new Player("cap.png");
+	player1->setPos_x(730);
+	player1->setPos_y(450);
+	player1->setBalance(700);
+	player1->setprevPos_x(730);
+	player1->setprevPos_y(450);
+	
+	player2 = new Player("car.png");
+	player2->setPos_x(730);
+	player2->setPos_y(480);
+	player2->setBalance(700);
+	player2->setprevPos_x(730);
+	player2->setprevPos_y(480);
+
+	setFont(std::string(ASSET_PATH) + "font.ttf");
+	playMusic(std::string(ASSET_PATH) + "soundtrack.mp3",0.1f,false,4000);
+
+}
+
+
+
+void Game::updateStartScreen()
+{
+	if (getKeyState(SCANCODE_RETURN))
+		status = STATUS_PLAYING;
+
+}
+void Game::drawStartScreen()
+{
+	Brush br;
+	br.texture = std::string(ASSET_PATH) + "board.png";
+	br.outline_opacity = 0.0f;
+	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
+	
+	char info[40];
+	sprintf_s(info, "Press ENTER to start");
+	drawText(CANVAS_WIDTH / 2 - 115, CANVAS_HEIGHT / 2 - 30, 30, info, br);
+}
+
+void Game::updateLevelScreen()
+{
 	MouseState ms;
 	getMouseState(ms);
 	float mx = windowToCanvasX(ms.cur_pos_x);
@@ -57,7 +124,7 @@ void Game::update() {
 		cur_player->setprevPos_y(my);
 
 		// "shuffle" the cards (just change the position)
-		/*
+		
 		for (int i = 0; i < 20; i++)
 		{
 			size_t j = i + rand() / (RAND_MAX / (20 - i) + 1);
@@ -68,10 +135,9 @@ void Game::update() {
 			assets[i].setX(tempX);
 			assets[i].setY(tempY);
 		}
-		*/
-		
+
 		// if the player is on a Questionmark card
-		if ((mx < 570 && mx>480) || (my < 320 && my>255)) 
+		if ((mx < 570 && mx>480) || (my < 320 && my>255))
 		{
 			not_q = false;
 			// get a random Questionmark card
@@ -80,14 +146,14 @@ void Game::update() {
 
 			if (cur_player == player1)
 			{
-				player1->setBalance(player1->getBalance()+questionmarks.at(random_pos).getFee());
+				player1->setBalance(player1->getBalance() + questionmarks.at(random_pos).getFee());
 			}
 			else
 			{
-				player2->setBalance(player2->getBalance()+questionmarks.at(random_pos).getFee());
+				player2->setBalance(player2->getBalance() + questionmarks.at(random_pos).getFee());
 			}
 			// if it is a GET task
-			if (questionmarks.at(random_pos).getFee() > 0) 
+			if (questionmarks.at(random_pos).getFee() > 0)
 			{
 				playSound(std::string(ASSET_PATH) + "good.mp3", 0.3f, false);
 			}
@@ -113,16 +179,19 @@ void Game::update() {
 				}
 			}
 		}
-		
+
 		counter++;
 		active_player->setActive(false);
 		active_player = nullptr;
 
 		if (next_player->getBalance() <= 0)
+		{
+			status = STATUS_OVER;
 			gameover = true;
+		}
 	}
 
-	if (not_q) 
+	if (not_q)
 	{
 		// if the property is owned
 		if (cur_asset->getIsOwned() && ongoingPayment)
@@ -175,9 +244,8 @@ void Game::update() {
 	}
 }
 
-
-// draw()
-void Game::draw() {
+void Game::drawLevelScreen()
+{
 	Brush br;
 	br.texture = std::string(ASSET_PATH) + "board.png";
 	br.outline_opacity = 0.0f;
@@ -207,7 +275,7 @@ void Game::draw() {
 		drawText(825, 120, 25, p, br);
 
 		// draw Owned Asset Lists
-		int ar=0,dex = 0;
+		int ar = 0, dex = 0;
 		for (int j = 0; j < 20; j++) {
 			sprintf_s(p, "%s", assets[j].getDescription().c_str());
 
@@ -218,7 +286,7 @@ void Game::draw() {
 				ar = ar + 20;
 			}
 			// if asset is owned by player2
-			else if(!assets[j].getIsOwnedbyPlayer1() && assets[j].getIsOwned())
+			else if (!assets[j].getIsOwnedbyPlayer1() && assets[j].getIsOwned())
 			{
 				drawText(830, 150 + dex, 20, p, br);
 				dex = dex + 20;
@@ -266,19 +334,18 @@ void Game::draw() {
 		char info[70];
 
 		// if game is over
-		if (player1->getBalance() <= 0 || player2->getBalance() <= 0)
+		if (gameover)
 		{
-			playSound(std::string(ASSET_PATH) + "game_over.mp3", 0.1f, false);
-			sprintf_s(p, "GAME OVER");
-			drawText(420, 220, 37, p, br);
+			sprintf_s(info, "You run out of cash!");
+			drawText(348, 190, 22, info, br);
 		}
-		else 
+		else
 		{
 			// if the card is an Asset
 			if (not_q)
 			{
 				// question for acquisition
-				if (cur_asset->getIsOwned() == false) 
+				if (cur_asset->getIsOwned() == false)
 				{
 					if (cantpurchase)
 					{
@@ -308,7 +375,7 @@ void Game::draw() {
 					}
 				}
 				// message for payment
-				else 
+				else
 				{
 					if (feetoplayer)
 					{
@@ -349,26 +416,15 @@ void Game::draw() {
 
 }
 
-// init()
-void Game::init() {
-	player1 = new Player("cap.png");
-	player1->setPos_x(730);
-	player1->setPos_y(450);
-	player1->setBalance(700);
-	player1->setprevPos_x(730);
-	player1->setprevPos_y(450);
-	
-	player2 = new Player("car.png");
-	player2->setPos_x(730);
-	player2->setPos_y(480);
-	player2->setBalance(700);
-	player2->setprevPos_x(730);
-	player2->setprevPos_y(480);
-
-	setFont(std::string(ASSET_PATH) + "font.ttf");
-	playMusic(std::string(ASSET_PATH) + "soundtrack.mp3",0.1f,false,4000);
-
+void Game::drawOverScreen()
+{
+	Brush br;
+	char p[50];
+	playSound(std::string(ASSET_PATH) + "game_over.mp3", 0.1f, false);
+	sprintf_s(p, "GAME OVER");
+	drawText(420, 220, 37, p, br);
 }
+
 
 // Constructor
 Game::Game()
