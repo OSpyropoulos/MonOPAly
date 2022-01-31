@@ -1,10 +1,11 @@
 ﻿  game.cpp
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(18,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(19,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(99,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(100,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(109,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(110,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(181,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\panos\Desktop\ergasiacpp\Monopoly\ergasiacpp\game.cpp(190,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ergasiacpp.vcxproj -> C:\Users\panos\Desktop\ergasiacpp\Monopoly\bin\ergasiacppd.exe
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(19,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(20,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(137,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(138,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(146,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(147,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(217,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\University\C++\ergasia\ergasiacpp\Monopoly\ergasiacpp\game.cpp(223,23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+sggd.lib(GLbackend.obj) : warning LNK4099: PDB 'sggd.pdb' was not found with 'sggd.lib(GLbackend.obj)' or at 'D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\sggd.pdb'; linking object as if no debug info
+  ergasiacpp.vcxproj -> D:\University\C++\ergasia\ergasiacpp\Monopoly\bin\ergasiacppd.exe
